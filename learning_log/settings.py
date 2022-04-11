@@ -22,9 +22,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-0!*)q%)(1&y)5@0%y!!*l*s^^ohiw=392j$ef&weo@-1$y)x-d'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -125,8 +125,32 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Minhas configuraçoes
 LOGIN_URL = '/users/login/'
+LOGOUT_REDIRECT_URL = '/'
+
 
 # Configuraçoes para django-bootstrap3
 BOOTSTRAP3 = {
     'include_jquery': True,
 }
+
+# Configuraçao para o Heroku
+cwd = os.getcwd()
+if cwd == '/app' or cwd[:4] == '/tmp':
+    import dj_database_url
+    DATABASES = {
+        'default': dj_database_url.config(default='postgres://localhost')
+    }
+
+    # Honor the 'X-Forwarded-Proto' header for request.is_secure().
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+    # Only allow heroku to host the project.
+    DEBUG = True
+    ALLOWED_HOSTS = ['*']
+
+    # Static asset configuration
+    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+    STATIC_ROOT = 'staticfiles'
+    STATICFILES_DIRS = (
+        os.path.join(BASE_DIR, 'static'),
+    )
