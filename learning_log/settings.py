@@ -24,7 +24,7 @@ SECRET_KEY = 'django-insecure-0!*)q%)(1&y)5@0%y!!*l*s^^ohiw=392j$ef&weo@-1$y)x-d
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['']
 
 # Application definition
 
@@ -145,8 +145,9 @@ if cwd == '/app' or cwd[:4] == '/tmp':
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
     # Only allow heroku to host the project.
-    DEBUG = True
-    ALLOWED_HOSTS = ['*']
+
+    ALLOWED_HOSTS = ['ocobra-log.herokuapp.com']
+    DEBUG = False
 
     # Static asset configuration
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
